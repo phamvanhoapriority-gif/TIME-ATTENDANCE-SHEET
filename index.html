@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -91,9 +92,11 @@ vi:{title:"GHI CHÉP LƯƠNG",label_company:"Tên công ty",label_date:"Ngày",l
 en:{title:"WORK HOURS RECORD",label_company:"Company Name",label_date:"Date",label_start_time:"Start time (00-24) and minute (00-59)",label_end_time:"End time (00-24) and minute (00-59)",label_shift:"Select shift",shift_day:"Day shift",shift_night:"Night shift",label_total_hours:"Total hours",label_overtime:"Overtime",btn_save:"Save",btn_reset:"Reset",btn_show_history:"View history details",history_title:"HISTORY DETAILS",no_history:"No history data.",btn_clear_history:"Clear history",btn_back:"Back to input"},
 zh:{title:"工作时间记录",label_company:"公司名称",label_date:"日期",label_start_time:"开始时间 (00-24) 和分钟 (00-59)",label_end_time:"结束时间 (00-24) 和分钟 (00-59)",label_shift:"选择班次",shift_day:"白班",shift_night:"夜班",label_total_hours:"总工时",label_overtime:"加班",btn_save:"保存",btn_reset:"重置",btn_show_history:"查看历史详情",history_title:"历史详情",no_history:"暂无历史数据。",btn_clear_history:"清除历史",btn_back:"返回输入"}
 };
+
 let currentLang='vi';
 let lichSu = JSON.parse(localStorage.getItem("lichSuLuong")||"[]");
 
+// Cập nhật text theo ngôn ngữ
 function updateText(lang){
   document.querySelectorAll("[data-text]").forEach(el=>{
     let k=el.getAttribute("data-text");
@@ -101,38 +104,44 @@ function updateText(lang){
   });
 }
 
+// Hàm tính giờ, tăng ca, ca đêm theo phút và định dạng giờ.phút
 function tinhGio(){
-  let gv_g=Number(document.getElementById("giovao_gio").value);
-  let gv_p=Number(document.getElementById("giovao_phut").value);
-  let gr_g=Number(document.getElementById("giora_gio").value);
-  let gr_p=Number(document.getElementById("giora_phut").value);
-  const shift=document.getElementById("calam").value;
+  let gv_g = Number(document.getElementById("giovao_gio").value);
+  let gv_p = Number(document.getElementById("giovao_phut").value);
+  let gr_g = Number(document.getElementById("giora_gio").value);
+  let gr_p = Number(document.getElementById("giora_phut").value);
+  const shift = document.getElementById("calam").value;
 
-  gv_g=Math.min(Math.max(gv_g,0),24); gr_g=Math.min(Math.max(gr_g,0),24);
-  gv_p=Math.min(Math.max(gv_p,0),59); gr_p=Math.min(Math.max(gr_p,0),59);
+  gv_g = Math.min(Math.max(gv_g,0),24); gv_p = Math.min(Math.max(gv_p,0),59);
+  gr_g = Math.min(Math.max(gr_g,0),24); gr_p = Math.min(Math.max(gr_p,0),59);
 
-  let start=gv_g+gv_p/60;
-  let end=gr_g+gr_p/60;
-  if(end<start) end+=24;
+  let startMin = gv_g*60 + gv_p;
+  let endMin = gr_g*60 + gr_p;
+  if(endMin < startMin) endMin += 24*60;
 
-  let total=end-start;
-  if(total<0) total=0;
+  let totalMin = endMin - startMin;
+  if(totalMin<0) totalMin=0;
 
-  let tangCa=0, caDem=0;
+  let tangCaMin=0, caDemMin=0;
   if(shift==="day"){
-    let tangCaStart=Math.max(start,17);
-    let tangCaEnd=Math.min(end,20);
-    tangCa=tangCaEnd-tangCaStart;
-    if(tangCa<0) tangCa=0;
+    let tangCaStart = Math.max(startMin, 17*60);
+    tangCaMin = Math.max(endMin - tangCaStart, 0);
   } else {
-    caDem=total;
+    caDemMin = totalMin;
   }
 
-  document.getElementById("tonggio").value=total.toFixed(2);
-  document.getElementById("tangca").value=tangCa.toFixed(2);
-  document.getElementById("cadem").value=caDem.toFixed(2);
+  function formatGioPhut(mins){
+    let h = Math.floor(mins/60);
+    let m = mins % 60;
+    return h + "." + (m<10?"0"+m:m);
+  }
+
+  document.getElementById("tonggio").value = formatGioPhut(totalMin);
+  document.getElementById("tangca").value = formatGioPhut(tangCaMin);
+  document.getElementById("cadem").value = formatGioPhut(caDemMin);
 }
 
+// Reset form
 function resetForm(){
   document.getElementById("tencongty").value="";
   document.getElementById("giovao_gio").value=8;
@@ -146,6 +155,7 @@ function resetForm(){
   document.getElementById("ngay").value="";
 }
 
+// Hiển thị lịch sử
 function hienThi(){
   const box=document.getElementById("lichsu");
   box.innerHTML="";
@@ -162,6 +172,7 @@ function hienThi(){
   });
 }
 
+// Lưu dữ liệu
 function luu(){
   tinhGio();
   const ngay=document.getElementById("ngay").value;
