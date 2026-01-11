@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Ghi chép lương</title>
+<title>CÔNG CỤ GHI GHÉP NGÀY GIỜ ĐI LÀM</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=SF+Pro+Text:wght@400;700&display=swap');
 body {margin:0;padding:0;font-family: 'SF Pro Text', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;background: linear-gradient(135deg,#f0f0f5 0%,#d9d9d9 100%);display:flex;justify-content:center;align-items:flex-start;padding:20px;-webkit-font-smoothing:antialiased;}
@@ -103,77 +103,35 @@ button {cursor:pointer;font-weight:700;font-size:1rem;border:none;border-radius:
 
 <script>
 const texts = {
-  vi:{
-    title:"GHI CHÉP LƯƠNG",
-    label_company:"Tên công ty",
-    label_date:"Ngày",
-    label_start_time:"Giờ vào (00-24) và phút (00-59)",
-    label_end_time:"Giờ ra (00-24) và phút (00-59)",
-    label_shift:"Chọn ca làm",
-    shift_day:"Ca ngày",
-    shift_night:"Ca đêm",
-    label_total_hours:"Tổng giờ",
-    label_overtime:"Tăng ca",
-    label_night_hours:"Ca đêm (giờ)",
-    label_start_time_short:"Vào",
-    label_end_time_short:"Ra",
-    btn_save:"Lưu",
-    btn_reset:"Reset",
-    btn_show_history:"Xem chi tiết lịch sử",
-    history_title:"LỊCH SỬ CHI TIẾT",
-    no_history:"Chưa có dữ liệu lịch sử.",
-    btn_clear_history:"Xóa lịch sử",
-    btn_back:"Quay lại nhập liệu",
-    footer_prefix:"Một sản phẩm của",
-    footer_name:"PHẠM VĂN HÒA PRIORITY"
+  vi:{ title:"GHI CHÉP LƯƠNG", label_company:"Tên công ty", label_date:"Ngày",
+    label_start_time:"Giờ vào (00-24) và phút (00-59)", label_end_time:"Giờ ra (00-24) và phút (00-59)",
+    label_shift:"Chọn ca làm", shift_day:"Ca ngày", shift_night:"Ca đêm",
+    label_total_hours:"Tổng giờ", label_overtime:"Tăng ca", label_night_hours:"Ca đêm (giờ)",
+    label_start_time_short:"Vào", label_end_time_short:"Ra",
+    btn_save:"Lưu", btn_reset:"Reset", btn_show_history:"Xem chi tiết lịch sử",
+    history_title:"LỊCH SỬ CHI TIẾT", no_history:"Chưa có dữ liệu lịch sử.",
+    btn_clear_history:"Xóa lịch sử", btn_back:"Quay lại nhập liệu",
+    footer_prefix:"Một sản phẩm của", footer_name:"PHẠM VĂN HÒA PRIORITY"
   },
-  en:{
-    title:"WORK HOURS RECORD",
-    label_company:"Company Name",
-    label_date:"Date",
-    label_start_time:"Start time (00-24) and minute (00-59)",
-    label_end_time:"End time (00-24) and minute (00-59)",
-    label_shift:"Select shift",
-    shift_day:"Day shift",
-    shift_night:"Night shift",
-    label_total_hours:"Total hours",
-    label_overtime:"Overtime",
-    label_night_hours:"Night hours",
-    label_start_time_short:"Start",
-    label_end_time_short:"End",
-    btn_save:"Save",
-    btn_reset:"Reset",
-    btn_show_history:"View history details",
-    history_title:"HISTORY DETAILS",
-    no_history:"No history data.",
-    btn_clear_history:"Clear history",
-    btn_back:"Back to input",
-    footer_prefix:"A product of",
-    footer_name:"PHẠM VĂN HÒA PRIORITY"
+  en:{ title:"WORK HOURS RECORD", label_company:"Company Name", label_date:"Date",
+    label_start_time:"Start time (00-24) and minute (00-59)", label_end_time:"End time (00-24) and minute (00-59)",
+    label_shift:"Select shift", shift_day:"Day shift", shift_night:"Night shift",
+    label_total_hours:"Total hours", label_overtime:"Overtime", label_night_hours:"Night hours",
+    label_start_time_short:"Start", label_end_time_short:"End",
+    btn_save:"Save", btn_reset:"Reset", btn_show_history:"View history details",
+    history_title:"HISTORY DETAILS", no_history:"No history data.",
+    btn_clear_history:"Clear history", btn_back:"Back to input",
+    footer_prefix:"A product of", footer_name:"PHẠM VĂN HÒA PRIORITY"
   },
-  zh:{
-    title:"工作时间记录",
-    label_company:"公司名称",
-    label_date:"日期",
-    label_start_time:"开始时间 (00-24) 和分钟 (00-59)",
-    label_end_time:"结束时间 (00-24) 和分钟 (00-59)",
-    label_shift:"选择班次",
-    shift_day:"白班",
-    shift_night:"夜班",
-    label_total_hours:"总工时",
-    label_overtime:"加班",
-    label_night_hours:"夜班时间",
-    label_start_time_short:"开始",
-    label_end_time_short:"结束",
-    btn_save:"保存",
-    btn_reset:"重置",
-    btn_show_history:"查看历史详情",
-    history_title:"历史详情",
-    no_history:"暂无历史数据。",
-    btn_clear_history:"清除历史",
-    btn_back:"返回输入",
-    footer_prefix:"产品",
-    footer_name:"PHẠM VĂN HÒA PRIORITY"
+  zh:{ title:"工作时间记录", label_company:"公司名称", label_date:"日期",
+    label_start_time:"开始时间 (00-24) 和分钟 (00-59)", label_end_time:"结束时间 (00-24) 和分钟 (00-59)",
+    label_shift:"选择班次", shift_day:"白班", shift_night:"夜班",
+    label_total_hours:"总工时", label_overtime:"加班", label_night_hours:"夜班时间",
+    label_start_time_short:"开始", label_end_time_short:"结束",
+    btn_save:"保存", btn_reset:"重置", btn_show_history:"查看历史详情",
+    history_title:"历史详情", no_history:"暂无历史数据。",
+    btn_clear_history:"清除历史", btn_back:"返回输入",
+    footer_prefix:"产品", footer_name:"PHẠM VĂN HÒA PRIORITY"
   }
 };
 
@@ -194,31 +152,45 @@ function updateText(lang){
   hienThi();
 }
 
+// Hàm tính giờ chính xác, ca đêm 22:00-6:00
 function tinhGio(){
   let gv_g = Number(document.getElementById("giovao_gio").value);
   let gv_p = Number(document.getElementById("giovao_phut").value);
   let gr_g = Number(document.getElementById("giora_gio").value);
   let gr_p = Number(document.getElementById("giora_phut").value);
   const shift = document.getElementById("calam").value;
+
   gv_g = Math.min(Math.max(gv_g,0),24); gv_p = Math.min(Math.max(gv_p,0),59);
   gr_g = Math.min(Math.max(gr_g,0),24); gr_p = Math.min(Math.max(gr_p,0),59);
+
   let startMin = gv_g*60 + gv_p;
   let endMin = gr_g*60 + gr_p;
   if(endMin < startMin) endMin += 24*60;
   let totalMin = endMin - startMin;
   if(totalMin<0) totalMin=0;
-  let tangCaMin=0, caDemMin=0;
-  if(shift==="day"){
+
+  let tangCaMin = 0, caDemMin = 0;
+  if(shift === "day"){
     let tangCaStart = Math.max(startMin, 17*60);
     tangCaMin = Math.max(endMin - tangCaStart, 0);
   } else {
-    caDemMin = totalMin;
+    // Ca đêm từ 22:00 -> 6:00
+    const nightStart = 22*60, nightEnd = 6*60;
+    let s = startMin, e = endMin;
+    // nếu vượt qua 24h
+    if(e <= s) e += 24*60;
+
+    // tính phần ca đêm
+    if(s < nightEnd) caDemMin += Math.min(e, nightEnd) - s;
+    if(e > nightStart) caDemMin += e - Math.max(s, nightStart);
   }
+
   function formatGioPhut(mins){
     let h = Math.floor(mins/60);
     let m = mins % 60;
-    return h + "." + (m<10?"0"+m:m);
+    return h + ":" + (m<10?"0"+m:m);
   }
+
   document.getElementById("tonggio").value = formatGioPhut(totalMin);
   document.getElementById("tangca").value = formatGioPhut(tangCaMin);
   document.getElementById("cadem").value = formatGioPhut(caDemMin);
@@ -238,87 +210,94 @@ function resetForm(){
 }
 
 function hienThi(){
-  const box=document.getElementById("lichsu");
-  box.innerHTML="";
-  if(lichSu.length===0){box.innerHTML=`<p>${texts[currentLang].no_history}</p>`;return;}
+  const box = document.getElementById("lichsu");
+  box.innerHTML = "";
+  if (lichSu.length === 0) {
+    box.innerHTML = `<p>${texts[currentLang].no_history}</p>`;
+    return;
+  }
   lichSu.forEach((item,index)=>{
-    const div=document.createElement("div");
-    div.className="history-item";
-    let classCa=item.calam==="day"?"caday":"cadem";
-    let caText=item.calam==="day"?texts[currentLang].shift_day:texts[currentLang].shift_night;
-    div.innerHTML=`<div style="flex:1;">
-      <b>${texts[currentLang].label_date}: ${item.ngay} - <span class="${classCa}">${caText}</span></b>
-      <div><b>${texts[currentLang].label_company}:</b> ${item.tencongty}</div>
-      <div class="time-row">
-        <span>${texts[currentLang].label_start_time_short}: ${item.giovao} → ${texts[currentLang].label_end_time_short}: ${item.giora}</span>
-        <span>${texts[currentLang].label_total_hours}: ${item.tonggio}</span>
+    const div = document.createElement("div");
+    div.className = "history-item";
+    let classCa = item.calam==="day"?"caday":"cadem";
+    let caText = item.calam==="day"?texts[currentLang].shift_day:texts[currentLang].shift_night;
+    div.innerHTML = `
+      <div style="flex:1;">
+        <b>${texts[currentLang].label_date}: ${item.ngay} - <span class="${classCa}">${caText}</span></b>
+        <div><b>${texts[currentLang].label_company}:</b> ${item.tencongty}</div>
+        <div class="time-row">
+          <span>${texts[currentLang].label_start_time_short}: ${item.giovao} → ${texts[currentLang].label_end_time_short}: ${item.giora}</span>
+          <span>${texts[currentLang].label_total_hours}: ${item.tonggio}</span>
+        </div>
+        <div class="detail-row">
+          ${texts[currentLang].label_overtime}: ${item.tangca} | ${texts[currentLang].label_night_hours}: ${item.cadem}
+        </div>
       </div>
-      <div class="detail-row">
-        ${texts[currentLang].label_overtime}: ${item.tangca} | ${texts[currentLang].shift_night}: ${item.cadem}
-      </div>
-    </div>
-    <button class="history-delete" onclick="xoaLS(${index})">Xóa</button>`;
+      <button class="history-delete" onclick="xoaLS(${index})">❌</button>
+    `;
     box.appendChild(div);
   });
 }
 
-function xoaLS(i){
-  lichSu.splice(i,1);
-  localStorage.setItem("lichSuLuong",JSON.stringify(lichSu));
-  hienThi();
+function xoaLS(index){
+  if(confirm("Bạn có chắc muốn xóa?")){
+    lichSu.splice(index,1);
+    localStorage.setItem("lichSuLuong",JSON.stringify(lichSu));
+    hienThi();
+  }
 }
 
-document.getElementById("lang-select").addEventListener("change",e=>{
-  currentLang=e.target.value;
-  updateText(currentLang);
-});
-
-document.getElementById("btn-save").addEventListener("click",()=>{
+document.getElementById("btn-save").onclick=function(){
+  let ten=document.getElementById("tencongty").value.trim();
+  let ngay=document.getElementById("ngay").value;
+  if(!ten || !ngay){alert("Vui lòng nhập đầy đủ thông tin!"); return;}
   tinhGio();
-  let newItem={
-    tencongty: document.getElementById("tencongty").value,
-    ngay: document.getElementById("ngay").value,
-    giovao: document.getElementById("giovao_gio").value+":"+document.getElementById("giovao_phut").value,
-    giora: document.getElementById("giora_gio").value+":"+document.getElementById("giora_phut").value,
-    tonggio: document.getElementById("tonggio").value,
-    tangca: document.getElementById("tangca").value,
-    cadem: document.getElementById("cadem").value,
-    calam: document.getElementById("calam").value
+  let data={
+    tencongty:ten,
+    ngay:ngay,
+    giovao:document.getElementById("giovao_gio").value+":"+document.getElementById("giovao_phut").value.padStart(2,"0"),
+    giora:document.getElementById("giora_gio").value+":"+document.getElementById("giora_phut").value.padStart(2,"0"),
+    calam:document.getElementById("calam").value,
+    tonggio:document.getElementById("tonggio").value,
+    tangca:document.getElementById("tangca").value,
+    cadem:document.getElementById("cadem").value
   };
-  lichSu.push(newItem);
+  lichSu.push(data);
   localStorage.setItem("lichSuLuong",JSON.stringify(lichSu));
-  alert("Saved!");
-});
+  resetForm();
+  alert("Đã lưu!");
+};
 
-document.getElementById("btn-reset").addEventListener("click",()=>resetForm());
+document.getElementById("btn-reset").onclick=resetForm;
 
-document.getElementById("btn-show-history").addEventListener("click",()=>{
+document.getElementById("btn-show-history").onclick=function(){
   document.getElementById("form-ghi").classList.add("hidden");
   document.getElementById("lichsu-container").classList.remove("hidden");
   hienThi();
-});
-
-document.getElementById("btn-back").addEventListener("click",()=>{
+};
+document.getElementById("btn-back").onclick=function(){
   document.getElementById("lichsu-container").classList.add("hidden");
   document.getElementById("form-ghi").classList.remove("hidden");
-});
+};
 
-document.getElementById("btn-clear-history").addEventListener("click",()=>{
-  if(confirm("Confirm clear history?")){
+document.getElementById("btn-clear-history").onclick=function(){
+  if(confirm("Bạn có chắc muốn xóa toàn bộ lịch sử?")){
     lichSu=[];
-    localStorage.setItem("lichSuLuong","[]");
+    localStorage.removeItem("lichSuLuong");
     hienThi();
   }
-});
+};
 
-// Tính giờ tự động khi thay đổi input
 ["giovao_gio","giovao_phut","giora_gio","giora_phut","calam"].forEach(id=>{
   document.getElementById(id).addEventListener("input",tinhGio);
 });
 
-// Khởi tạo text và form
+document.getElementById("lang-select").onchange=function(){
+  currentLang=this.value;
+  updateText(currentLang);
+};
+
 updateText(currentLang);
-tinhGio();
 </script>
 </body>
 </html>
