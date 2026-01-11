@@ -2,112 +2,152 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>CÔNG CỤ GHI CHÉP NGÀY GIỜ ĐI LÀM</title>
-<style>
-@import url('https://fonts.googleapis.com/css2?family=SF+Pro+Text:wght@400;700&display=swap');
-body {margin:0;padding:0;font-family: 'SF Pro Text', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;background: linear-gradient(135deg,#f0f0f5 0%,#d9d9d9 100%);display:flex;justify-content:center;align-items:flex-start;padding:20px;-webkit-font-smoothing:antialiased; transition: background 0.3s;}
-body.dark { background: #1a1a1a; color: #eee; }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CÔNG CỤ GHI CHÉP NGÀY GIỜ ĐI LÀM</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=SF+Pro+Text:wght@400;700&display=swap');
+        
+        body {margin:0;padding:0;font-family: 'SF Pro Text', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;background: linear-gradient(135deg,#f0f0f5 0%,#d9d9d9 100%);display:flex;justify-content:center;align-items:flex-start;padding:20px;-webkit-font-smoothing:antialiased; transition: background 0.3s;}
+        body.dark { background: #1a1a1a; color: #eee; }
+        
+        #app {background: rgba(255 255 255 / 0.85);backdrop-filter: saturate(180%) blur(20px);border-radius: 20px;box-shadow: 0 8px 32px 0 rgba(0,0,0,0.12);padding:40px 28px 28px 28px;max-width:420px;width:100%;color:#142a51;box-sizing:border-box; position: relative;}
+        body.dark #app { background: rgba(40, 40, 40, 0.95); color: #fff; }
+        
+        #themeToggle { position: absolute; top: 15px; right: 15px; border: none; background: rgba(0,0,0,0.05); width: 35px; height: 35px; border-radius: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
+        body.dark #themeToggle { background: rgba(255,255,255,0.1); }
+        
+        h1 {margin:0 0 10px 0;font-weight:700;font-size:1.4rem;text-align:center; text-transform: uppercase;}
+        .field {margin-bottom:12px;}
+        label {display:block;margin-bottom:4px;font-weight:600;font-size:0.85rem;}
+        
+        input[type="text"], input[type="date"], input[type="number"], select {width:100%;padding:10px 14px;font-size:1rem;border:1px solid #ddd;border-radius:12px;background: #fff;box-sizing:border-box; outline: none;}
+        body.dark input, body.dark select { background: #333; color: #fff; border-color: #444; }
+        input:focus { border-color: #4cd964; }
+        
+        .time-group {display:flex;gap:8px;}
+        .time-group > div {flex:1;}
+        
+        button {cursor:pointer;font-weight:700;font-size:1rem;border:none;border-radius:12px;padding:12px 0;width:48%; transition: 0.3s;}
+        #btn-save {background-color:#4cd964;color:white;}
+        #btn-reset {background-color:#ff3b30;color:white;}
+        #btn-show-history {background-color:#fff;color:#142a51;border-radius:16px;padding:12px 0;width:100%;margin-top:12px;font-weight:700;box-shadow:0 2px 8px rgb(0 0 0 / 0.12); border: 1px solid #ddd;}
+        
+        #lichsu-container {margin-top:20px; border-radius:20px; max-height:500px; overflow-y:auto;}
+        .history-card { 
+            background: #fff; 
+            border: 1px solid #eee; 
+            border-radius: 15px; 
+            padding: 15px; 
+            margin-bottom: 15px; 
+            position: relative; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.02); 
+        }
+        body.dark .history-card { background: #252525; border-color: #333; }
+        
+        .history-card .date-header { 
+            font-weight: bold; 
+            font-size: 0.95rem; 
+            margin-bottom: 4px; 
+            border-bottom: 1px solid #f0f0f0; 
+            padding-bottom: 4px;
+            padding-right: 30px; /* Chừa chỗ cho nút X sát mép */
+        }
+        body.dark .history-card .date-header { border-bottom-color: #444; }
 
-#app {background: rgba(255 255 255 / 0.85);backdrop-filter: saturate(180%) blur(20px);border-radius: 20px;box-shadow: 0 8px 32px 0 rgba(0,0,0,0.12);padding:40px 28px 28px 28px;max-width:420px;width:100%;color:#142a51;box-sizing:border-box; position: relative;}
-body.dark #app { background: rgba(40, 40, 40, 0.95); color: #fff; }
+        .history-delete { 
+            position: absolute; 
+            top: 10px; /* Nằm sát mép trên */
+            right: 10px; /* Nằm sát mép phải */
+            background:#ff3b30; 
+            color:white; 
+            border:none; 
+            border-radius: 50%; /* Bo tròn hoàn toàn */
+            width: 24px; 
+            height: 24px; 
+            cursor:pointer;
+            z-index: 5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: bold;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
 
-#themeToggle { position: absolute; top: 15px; right: 15px; border: none; background: rgba(0,0,0,0.05); width: 35px; height: 35px; border-radius: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
-body.dark #themeToggle { background: rgba(255,255,255,0.1); }
-
-h1 {margin:0 0 10px 0;font-weight:700;font-size:1.4rem;text-align:center; text-transform: uppercase;}
-.field {margin-bottom:12px;}
-label {display:block;margin-bottom:4px;font-weight:600;font-size:0.85rem;}
-input[type="text"], input[type="date"], input[type="number"], select {width:100%;padding:10px 14px;font-size:1rem;border:1px solid #ddd;border-radius:12px;background: #fff;box-sizing:border-box; outline: none;}
-body.dark input, body.dark select { background: #333; color: #fff; border-color: #444; }
-input:focus { border-color: #4cd964; }
-
-.time-group {display:flex;gap:8px;}
-.time-group > div {flex:1;}
-button {cursor:pointer;font-weight:700;font-size:1rem;border:none;border-radius:12px;padding:12px 0;width:48%; transition: 0.3s;}
-#btn-save {background-color:#4cd964;color:white;}
-#btn-reset {background-color:#ff3b30;color:white;}
-#btn-show-history {background-color:#fff;color:#142a51;border-radius:16px;padding:12px 0;width:100%;margin-top:12px;font-weight:700;box-shadow:0 2px 8px rgb(0 0 0 / 0.12); border: 1px solid #ddd;}
-
-/* GIAO DIỆN LỊCH SỬ DẠNG THẺ (CARD) */
-#lichsu-container {margin-top:20px; border-radius:20px; max-height:500px; overflow-y:auto;}
-.history-card { background: #fff; border: 1px solid #eee; border-radius: 15px; padding: 15px; margin-bottom: 15px; position: relative; box-shadow: 0 4px 10px rgba(0,0,0,0.02); }
-body.dark .history-card { background: #252525; border-color: #333; }
-.history-card .date-header { font-weight: bold; font-size: 0.95rem; margin-bottom: 4px; border-bottom: 1px solid #f0f0f0; padding-bottom: 4px;}
-.history-card .shift-tag { font-weight: bold; color: #28a745; font-size: 0.85rem; display: block; margin-bottom: 5px; }
-.history-card .company { font-weight: bold; margin-bottom: 8px; font-size: 0.9rem; color: #142a51; }
-body.dark .history-card .company { color: #81b0ff; }
-.history-card .details-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; font-size: 0.85rem; color: #555; }
-body.dark .history-card .details-grid { color: #ccc; }
-.history-delete { position: absolute; top: 15px; right: 15px; background:#ff3b30; color:white; border:none; border-radius:8px; width:28px; height:28px; cursor:pointer;}
-
-#footer-credit {text-align:center;margin-top:20px;font-size:0.75rem;color:#888;display:flex;align-items:center;justify-content:center;gap:6px;}
-.hidden {display:none !important;}
-</style>
+        .history-card .shift-tag { font-weight: bold; color: #28a745; font-size: 0.85rem; display: block; margin-bottom: 5px; }
+        .history-card .company { font-weight: bold; margin-bottom: 8px; font-size: 0.9rem; color: #142a51; }
+        body.dark .history-card .company { color: #81b0ff; }
+        
+        .history-card .details-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; font-size: 0.85rem; color: #555; }
+        body.dark .history-card .details-grid { color: #ccc; }
+        
+        #footer-credit {text-align:center;margin-top:20px;font-size:0.75rem;color:#888;display:flex;align-items:center;justify-content:center;gap:6px;}
+        .hidden {display:none !important;}
+    </style>
 </head>
 <body>
 
 <div id="app">
-  <button id="themeToggle">🌙</button>
-  <h1 data-text="title">GHI CHÉP LƯƠNG</h1>
-  
-  <select id="lang-select" style="margin-bottom:15px;">
-    <option value="vi">Tiếng Việt</option>
-    <option value="en">English</option>
-    <option value="zh">中文</option>
-  </select>
-
-  <div id="form-ghi">
-    <div class="field"><label data-text="label_date">Ngày</label><input type="date" id="ngay"></div>
-    <div class="field">
-      <label data-text="label_shift">Chọn ca làm</label>
-      <select id="calam">
-        <option value="day" data-text-option="shift_day">Ca ngày (8h-20h)</option>
-        <option value="night" data-text-option="shift_night">Ca đêm (20h-8h)</option>
-      </select>
-    </div>
-    <div class="field"><label data-text="label_company">Tên công ty</label><input type="text" id="tencongty"></div>
-
-    <div class="time-group">
-      <div><label data-text="label_start_time_short">Vào (Giờ : Phút)</label>
-        <div style="display:flex; gap:4px;"><input type="number" id="gv_h" value="8"> : <input type="number" id="gv_p" value="0"></div>
-      </div>
-      <div><label data-text="label_end_time_short">Ra (Giờ : Phút)</label>
-        <div style="display:flex; gap:4px;"><input type="number" id="gr_h" value="17"> : <input type="number" id="gr_p" value="0"></div>
-      </div>
-    </div>
-
-    <div class="time-group" style="margin-top:10px;">
-        <div><label data-text="label_total_hours">Tổng giờ</label><input type="text" id="res_tong" readonly></div>
-        <div><label data-text="label_overtime">Tăng ca</label><input type="text" id="res_tc" readonly></div>
-    </div>
+    <button id="themeToggle">🌙</button>
+    <h1 data-text="title">GHI CHÉP LƯƠNG</h1>
     
-    <div style="display:flex; justify-content:space-between; margin-top:15px;">
-      <button id="btn-save" data-text="btn_save">Lưu</button>
-      <button id="btn-reset" data-text="btn_reset">Reset</button>
+    <select id="lang-select" style="margin-bottom:15px;">
+        <option value="vi">Tiếng Việt</option>
+        <option value="en">English</option>
+        <option value="zh">中文</option>
+    </select>
+
+    <div id="form-ghi">
+        <div class="field"><label data-text="label_date">Ngày</label><input type="date" id="ngay"></div>
+        <div class="field">
+            <label data-text="label_shift">Chọn ca làm</label>
+            <select id="calam">
+                <option value="day" data-text-option="shift_day">Ca ngày (8h-20h)</option>
+                <option value="night" data-text-option="shift_night">Ca đêm (20h-8h)</option>
+            </select>
+        </div>
+        <div class="field"><label data-text="label_company">Tên công ty</label><input type="text" id="tencongty"></div>
+
+        <div class="time-group">
+            <div><label data-text="label_start_time_short">Vào (Giờ : Phút)</label>
+                <div style="display:flex; gap:4px;"><input type="number" id="gv_h" value="8"> : <input type="number" id="gv_p" value="0"></div>
+            </div>
+            <div><label data-text="label_end_time_short">Ra (Giờ : Phút)</label>
+                <div style="display:flex; gap:4px;"><input type="number" id="gr_h" value="17"> : <input type="number" id="gr_p" value="0"></div>
+            </div>
+        </div>
+
+        <div class="time-group" style="margin-top:10px;">
+            <div><label data-text="label_total_hours">Tổng giờ</label><input type="text" id="res_tong" readonly></div>
+            <div><label data-text="label_overtime">Tăng ca</label><input type="text" id="res_tc" readonly></div>
+        </div>
+        
+        <div style="display:flex; justify-content:space-between; margin-top:15px;">
+            <button id="btn-save" data-text="btn_save">Lưu</button>
+            <button id="btn-reset" data-text="btn_reset">Reset</button>
+        </div>
+        <button id="btn-show-history" data-text="btn_show_history">Xem chi tiết lịch sử</button>
     </div>
-    <button id="btn-show-history" data-text="btn_show_history">Xem chi tiết lịch sử</button>
-  </div>
 
-  <div id="lichsu-container" class="hidden">
-    <h2 data-text="history_title" style="text-align:center; font-size: 1.1rem;">LỊCH SỬ CHI TIẾT</h2>
-    <div id="lichsu-list"></div>
-    <button id="btn-clear" data-text="btn_clear_history" style="width:100%; background:#ff3b30; color:white; margin-top:10px;">Xóa lịch sử</button>
-    <button id="btn-back" data-text="btn_back" style="width:100%; background:#4cd964; color:white; margin-top:10px;">Quay lại</button>
-  </div>
+    <div id="lichsu-container" class="hidden">
+        <h2 data-text="history_title" style="text-align:center; font-size: 1.1rem;">LỊCH SỬ CHI TIẾT</h2>
+        <div id="lichsu-list"></div>
+        <button id="btn-clear" data-text="btn_clear_history" style="width:100%; background:#ff3b30; color:white; margin-top:10px;">Xóa lịch sử</button>
+        <button id="btn-back" data-text="btn_back" style="width:100%; background:#4cd964; color:white; margin-top:10px;">Quay lại</button>
+    </div>
 
-  <div id="footer-credit">
-    <span>Một sản phẩm của :  PHẠM VĂN HÒA PRIORITY</span>
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" fill="#4cd964"/></svg>
-  </div>
+    <div id="footer-credit">
+        <span>Một sản phẩm của : PHẠM VĂN HÒA PRIORITY</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" fill="#4cd964"/></svg>
+    </div>
 </div>
 
 <script>
 const texts = {
-  vi: { title:"GHI CHÉP LƯƠNG", label_company:"Tên công ty", label_date:"Ngày", label_shift:"Chọn ca làm", shift_day:"Ca ngày", shift_night:"Ca đêm", label_start_time_short:"Vào", label_end_time_short:"Ra", label_total_hours:"Tổng giờ", label_overtime:"Tăng ca", btn_save:"Lưu", btn_reset:"Reset", btn_show_history:"Xem chi tiết lịch sử", history_title:"LỊCH SỬ CHI TIẾT", no_history:"Chưa có dữ liệu lịch sử.", btn_clear_history:"Xóa lịch sử", btn_back:"Quay lại" },
-  en: { title:"WORK LOG", label_company:"Company Name", label_date:"Date", label_shift:"Select Shift", shift_day:"Day Shift", shift_night:"Night Shift", label_start_time_short:"In", label_end_time_short:"Out", label_total_hours:"Total Hours", label_overtime:"Overtime", btn_save:"Save", btn_reset:"Reset", btn_show_history:"View History", history_title:"DETAILED HISTORY", no_history:"No data.", btn_clear_history:"Clear All", btn_back:"Back" },
-  zh: { title:"工资记录", label_company:"公司名称", label_date:"日期", label_shift:"选择班次", shift_day:"白班", shift_night:"夜班", label_start_time_short:"进入", label_end_time_short:"出去", label_total_hours:"总工时", label_overtime:"加班", btn_save:"保存", btn_reset:"重置", btn_show_history:"查看历史", history_title:"历史详情", no_history:"暂无数据。", btn_clear_history:"清除全部", btn_back:"返回" }
+    vi: { title:"GHI CHÉP LƯƠNG", label_company:"Tên công ty", label_date:"Ngày", label_shift:"Chọn ca làm", shift_day:"Ca ngày (8h-20h)", shift_night:"Ca đêm (20h-8h)", label_start_time_short:"Vào", label_end_time_short:"Ra", label_total_hours:"Tổng giờ", label_overtime:"Tăng ca", btn_save:"Lưu", btn_reset:"Reset", btn_show_history:"Xem chi tiết lịch sử", history_title:"LỊCH SỬ CHI TIẾT", no_history:"Chưa có dữ liệu lịch sử.", btn_clear_history:"Xóa lịch sử", btn_back:"Quay lại" },
+    en: { title:"WORK LOG", label_company:"Company Name", label_date:"Date", label_shift:"Select Shift", shift_day:"Day Shift (8h-20h)", shift_night:"Night Shift (20h-8h)", label_start_time_short:"In", label_end_time_short:"Out", label_total_hours:"Total Hours", label_overtime:"Overtime", btn_save:"Save", btn_reset:"Reset", btn_show_history:"View History", history_title:"DETAILED HISTORY", no_history:"No data.", btn_clear_history:"Clear All", btn_back:"Back" },
+    zh: { title:"工资记录", label_company:"公司名称", label_date:"日期", label_shift:"选择班次", shift_day:"白班 (8h-20h)", shift_night:"夜班 (20h-8h)", label_start_time_short:"进入", label_end_time_short:"出去", label_total_hours:"总工时", label_overtime:"加班", btn_save:"保存", btn_reset:"重置", btn_show_history:"查看历史", history_title:"历史详情", no_history:"暂无数据。", btn_clear_history:"清除全部", btn_back:"返回" }
 };
 
 let currentLang = 'vi';
@@ -123,11 +163,8 @@ function calculate() {
     if (totalMin < 0) totalMin += 24 * 60;
 
     let totalHours = totalMin / 60;
-    // Quy tắc: 8 tiếng đầu không tăng ca (coi như đủ công), trên 8 tiếng bắt đầu tính tăng ca
-    // Nếu làm đủ 12 tiếng -> tăng ca = 12 - 9 (trừ 1h nghỉ) = 3 tiếng? 
-    // Theo yêu cầu của bạn: Làm 12 tiếng là tăng ca 3 tiếng -> tức là làm 8 tiếng chính thức + 1 tiếng nghỉ + 3 tiếng tăng ca.
     let tc = totalHours > 9 ? totalHours - 9 : 0; 
-    if (totalHours <= 9 && totalHours > 8) tc = 0; // Khoảng nghỉ không tính tăng ca
+    if (totalHours <= 9 && totalHours > 8) tc = 0; 
 
     document.getElementById('res_tong').value = totalHours.toFixed(2) + "h";
     document.getElementById('res_tc').value = tc.toFixed(2) + "h";
@@ -155,8 +192,10 @@ function renderHistory() {
         const originalIndex = lichSu.length - 1 - index;
         const card = document.createElement('div');
         card.className = "history-card";
-        const caText = item.calam === "day" ? texts[currentLang].shift_day : texts[currentLang].shift_night;
+        // Lấy nhãn ca làm từ bộ ngôn ngữ hiện tại
+        const caText = item.calam === "day" ? texts[currentLang].shift_day.split(' (')[0] : texts[currentLang].shift_night.split(' (')[0];
         card.innerHTML = `
+            <button class="history-delete" onclick="deleteItem(${originalIndex})">✖</button>
             <div class="date-header">${texts[currentLang].label_date}: ${item.ngay}</div>
             <span class="shift-tag">${caText}</span>
             <div class="company">${texts[currentLang].label_company}: ${item.tencongty}</div>
@@ -166,7 +205,6 @@ function renderHistory() {
                 <span>${texts[currentLang].label_end_time_short}: ${item.giora}</span>
                 <span>${texts[currentLang].label_overtime}: ${item.tc}</span>
             </div>
-            <button class="history-delete" onclick="deleteItem(${originalIndex})">✖</button>
         `;
         box.appendChild(card);
     });
@@ -193,10 +231,18 @@ window.deleteItem = (i) => { if(confirm("Xóa?")) { lichSu.splice(i,1); localSto
 
 document.getElementById('lang-select').onchange = function() {
     currentLang = this.value;
+    
+    // Cập nhật các văn bản thông thường
     document.querySelectorAll("[data-text]").forEach(el => {
         const key = el.getAttribute("data-text");
         if(texts[currentLang][key]) el.textContent = texts[currentLang][key];
     });
+
+    // Cập nhật văn bản trong Select Ca làm
+    const calamSelect = document.getElementById('calam');
+    calamSelect.options[0].textContent = texts[currentLang].shift_day;
+    calamSelect.options[1].textContent = texts[currentLang].shift_night;
+
     renderHistory();
 };
 
@@ -219,12 +265,10 @@ document.getElementById('btn-back').onclick = function() {
 document.getElementById('btn-reset').onclick = () => { document.getElementById('tencongty').value = ""; calculate(); };
 document.getElementById('btn-clear').onclick = () => { if(confirm("Xóa hết?")) { lichSu=[]; localStorage.removeItem("lichSuLuong_V4"); renderHistory(); }};
 
-// Lắng nghe thay đổi giờ để tính toán trực tiếp
 ["gv_h", "gv_p", "gr_h", "gr_p"].forEach(id => {
     document.getElementById(id).addEventListener("input", calculate);
 });
 
-// Khởi tạo
 document.getElementById('ngay').valueAsDate = new Date();
 calculate();
 </script>
