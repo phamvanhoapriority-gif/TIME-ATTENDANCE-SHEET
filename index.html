@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -26,11 +25,11 @@ button {cursor:pointer;font-weight:700;font-size:1rem;border:none;border-radius:
 #buttons {display:flex;justify-content:space-between;margin-top:8px;}
 #lichsu-container {margin-top:20px;background: rgba(255 255 255 / 0.8);border-radius:20px;padding:20px;box-shadow:0 8px 32px 0 rgba(0,0,0,0.12);color:#142a51;max-height:460px;overflow-y:auto;}
 .hidden {display:none !important;}
-.history-item {border-bottom:1px solid rgba(20,42,81,0.1);padding:10px 0;font-size:0.9rem;}
+.history-item {border-bottom:1px solid rgba(20,42,81,0.1);padding:10px 0;font-size:0.9rem;display:flex;justify-content:space-between;align-items:center;}
 .history-item:last-child {border-bottom:none;}
 .caday {color:#4cd964;font-weight:700;}
 .cadem {color:#006400;font-weight:700;}
-.time-row, .detail-row {display:flex;justify-content:space-between;}
+.time-row, .detail-row {display:flex;justify-content:space-between;width:100%;}
 .time-row {margin-top:4px;}
 #lichsu p {margin:0 0 10px 0;font-style:italic;color:#666;}
 #btn-clear-history, #btn-back {background-color:#ff3b30;color:white;font-weight:700;border-radius:12px;padding:12px 0;width:100%;margin-top:10px;box-sizing:border-box;}
@@ -40,6 +39,9 @@ button {cursor:pointer;font-weight:700;font-size:1rem;border:none;border-radius:
 #lichsu::-webkit-scrollbar {width:8px;}
 #lichsu::-webkit-scrollbar-thumb {background-color:rgba(76,217,100,0.6);border-radius:8px;}
 #lichsu::-webkit-scrollbar-track {background: rgba(0,0,0,0.05);}
+.history-delete {background:#ff3b30;color:white;border:none;border-radius:8px;padding:2px 6px;margin-left:8px;cursor:pointer;font-size:0.8rem;}
+.history-delete:hover {background:#d62b1a;}
+#footer-credit {text-align:center;margin-top:20px;font-size:0.8rem;color:#666;display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap;}
 @media (max-width:480px){#app{max-width:100%;padding:20px;border-radius:16px;}button{font-size:0.9rem;padding:10px 0;}#btn-show-history{font-size:0.9rem;padding:10px 0;}}
 </style>
 </head>
@@ -51,6 +53,7 @@ button {cursor:pointer;font-weight:700;font-size:1rem;border:none;border-radius:
   <option value="en">English</option>
   <option value="zh">中文</option>
 </select>
+
 <div id="form-ghi">
   <div class="field"><label data-text="label_company">Tên công ty</label><input type="text" id="tencongty"></div>
   <div class="field"><label data-text="label_date">Ngày</label><input type="date" id="ngay"></div>
@@ -86,42 +89,51 @@ button {cursor:pointer;font-weight:700;font-size:1rem;border:none;border-radius:
   <button id="btn-back" data-text="btn_back">Quay lại nhập liệu</button>
 </div>
 
+<!-- Footer -->
+<div id="footer-credit">
+  <span id="footer-text-prefix">Một sản phẩm của</span>
+  <span id="footer-text-name">PHẠM VĂN HÒA PRIORITY</span>
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path fill-rule="evenodd" clip-rule="evenodd" 
+      d="M7.75738 11.7976C7.37538 11.3986 6.74338 11.3826 6.34338 11.7646C5.94438 12.1456 5.92838 12.7786 6.31038 13.1786L9.4665 16.1912C9.6545 16.3882 9.9145 16.5002 10.1865 16.5012H10.1905C10.4615 16.5012 10.7205 16.3912 10.9085 16.1962L17.6855 9.19624C18.0695 8.79924 18.0595 8.16624 17.6625 7.78224C17.2645 7.39724 16.6315 7.40924 16.2485 7.80524L10.1955 14.0582L7.75738 11.7976ZM12.0004 2.00146C6.47738 2.00146 2.00038 6.47846 2.00038 12.0015C2.00038 17.5235 6.47738 22.0015 12.0004 22.0015C17.5234 22.0015 22.0004 17.5235 22.0004 12.0015C22.0004 6.47846 17.5234 2.00146 12.0004 2.00146Z" 
+      fill="#00BC3C">
+    </path>
+  </svg>
+</div>
+
 <script>
 const texts = {
-vi:{title:"GHI CHÉP LƯƠNG",label_company:"Tên công ty",label_date:"Ngày",label_start_time:"Giờ vào (00-24) và phút (00-59)",label_end_time:"Giờ ra (00-24) và phút (00-59)",label_shift:"Chọn ca làm",shift_day:"Ca ngày",shift_night:"Ca đêm",label_total_hours:"Tổng giờ",label_overtime:"Tăng ca",btn_save:"Lưu",btn_reset:"Reset",btn_show_history:"Xem chi tiết lịch sử",history_title:"LỊCH SỬ CHI TIẾT",no_history:"Chưa có dữ liệu lịch sử.",btn_clear_history:"Xóa lịch sử",btn_back:"Quay lại nhập liệu"},
-en:{title:"WORK HOURS RECORD",label_company:"Company Name",label_date:"Date",label_start_time:"Start time (00-24) and minute (00-59)",label_end_time:"End time (00-24) and minute (00-59)",label_shift:"Select shift",shift_day:"Day shift",shift_night:"Night shift",label_total_hours:"Total hours",label_overtime:"Overtime",btn_save:"Save",btn_reset:"Reset",btn_show_history:"View history details",history_title:"HISTORY DETAILS",no_history:"No history data.",btn_clear_history:"Clear history",btn_back:"Back to input"},
-zh:{title:"工作时间记录",label_company:"公司名称",label_date:"日期",label_start_time:"开始时间 (00-24) 和分钟 (00-59)",label_end_time:"结束时间 (00-24) 和分钟 (00-59)",label_shift:"选择班次",shift_day:"白班",shift_night:"夜班",label_total_hours:"总工时",label_overtime:"加班",btn_save:"保存",btn_reset:"重置",btn_show_history:"查看历史详情",history_title:"历史详情",no_history:"暂无历史数据。",btn_clear_history:"清除历史",btn_back:"返回输入"}
+  vi:{title:"GHI CHÉP LƯƠNG",label_company:"Tên công ty",label_date:"Ngày",label_start_time:"Giờ vào (00-24) và phút (00-59)",label_end_time:"Giờ ra (00-24) và phút (00-59)",label_shift:"Chọn ca làm",shift_day:"Ca ngày",shift_night:"Ca đêm",label_total_hours:"Tổng giờ",label_overtime:"Tăng ca",btn_save:"Lưu",btn_reset:"Reset",btn_show_history:"Xem chi tiết lịch sử",history_title:"LỊCH SỬ CHI TIẾT",no_history:"Chưa có dữ liệu lịch sử.",btn_clear_history:"Xóa lịch sử",btn_back:"Quay lại nhập liệu",footer_prefix:"Một sản phẩm của",footer_name:"PHẠM VĂN HÒA PRIORITY"},
+  en:{title:"WORK HOURS RECORD",label_company:"Company Name",label_date:"Date",label_start_time:"Start time (00-24) and minute (00-59)",label_end_time:"End time (00-24) and minute (00-59)",label_shift:"Select shift",shift_day:"Day shift",shift_night:"Night shift",label_total_hours:"Total hours",label_overtime:"Overtime",btn_save:"Save",btn_reset:"Reset",btn_show_history:"View history details",history_title:"HISTORY DETAILS",no_history:"No history data.",btn_clear_history:"Clear history",btn_back:"Back to input",footer_prefix:"A product of",footer_name:"PHẠM VĂN HÒA PRIORITY"},
+  zh:{title:"工作时间记录",label_company:"公司名称",label_date:"日期",label_start_time:"开始时间 (00-24) 和分钟 (00-59)",label_end_time:"结束时间 (00-24) 和分钟 (00-59)",label_shift:"选择班次",shift_day:"白班",shift_night:"夜班",label_total_hours:"总工时",label_overtime:"加班",btn_save:"保存",btn_reset:"重置",btn_show_history:"查看历史详情",history_title:"历史详情",no_history:"暂无历史数据。",btn_clear_history:"清除历史",btn_back:"返回输入",footer_prefix:"产品",footer_name:"PHẠM VĂN HÒA PRIORITY"}
 };
 
 let currentLang='vi';
 let lichSu = JSON.parse(localStorage.getItem("lichSuLuong")||"[]");
 
-// Cập nhật text theo ngôn ngữ
 function updateText(lang){
   document.querySelectorAll("[data-text]").forEach(el=>{
     let k=el.getAttribute("data-text");
     if(texts[lang][k]) el.textContent=texts[lang][k];
   });
+  document.getElementById("footer-text-prefix").textContent = texts[lang].footer_prefix;
+  document.getElementById("footer-text-name").textContent = texts[lang].footer_name;
+  hienThi();
 }
 
-// Hàm tính giờ, tăng ca, ca đêm theo phút và định dạng giờ.phút
 function tinhGio(){
   let gv_g = Number(document.getElementById("giovao_gio").value);
   let gv_p = Number(document.getElementById("giovao_phut").value);
   let gr_g = Number(document.getElementById("giora_gio").value);
   let gr_p = Number(document.getElementById("giora_phut").value);
   const shift = document.getElementById("calam").value;
-
   gv_g = Math.min(Math.max(gv_g,0),24); gv_p = Math.min(Math.max(gv_p,0),59);
   gr_g = Math.min(Math.max(gr_g,0),24); gr_p = Math.min(Math.max(gr_p,0),59);
-
   let startMin = gv_g*60 + gv_p;
   let endMin = gr_g*60 + gr_p;
   if(endMin < startMin) endMin += 24*60;
-
   let totalMin = endMin - startMin;
   if(totalMin<0) totalMin=0;
-
   let tangCaMin=0, caDemMin=0;
   if(shift==="day"){
     let tangCaStart = Math.max(startMin, 17*60);
@@ -129,19 +141,16 @@ function tinhGio(){
   } else {
     caDemMin = totalMin;
   }
-
   function formatGioPhut(mins){
     let h = Math.floor(mins/60);
     let m = mins % 60;
     return h + "." + (m<10?"0"+m:m);
   }
-
   document.getElementById("tonggio").value = formatGioPhut(totalMin);
   document.getElementById("tangca").value = formatGioPhut(tangCaMin);
   document.getElementById("cadem").value = formatGioPhut(caDemMin);
 }
 
-// Reset form
 function resetForm(){
   document.getElementById("tencongty").value="";
   document.getElementById("giovao_gio").value=8;
@@ -155,75 +164,56 @@ function resetForm(){
   document.getElementById("ngay").value="";
 }
 
-// Hiển thị lịch sử
 function hienThi(){
   const box=document.getElementById("lichsu");
   box.innerHTML="";
   if(lichSu.length===0){box.innerHTML=`<p>${texts[currentLang].no_history}</p>`;return;}
-  lichSu.forEach(item=>{
-    const div=document.createElement("div"); div.className="history-item";
+  lichSu.forEach((item,index)=>{
+    const div=document.createElement("div"); 
+    div.className="history-item";
     let classCa=item.calam==="day"?"caday":"cadem";
     let caText=item.calam==="day"?texts[currentLang].shift_day:texts[currentLang].shift_night;
-    div.innerHTML=`<b>${item.ngay} - <span class="${classCa}">${caText}</span></b>
+    div.innerHTML=`<div style="flex:1;">
+      <b>${item.ngay} - <span class="${classCa}">${caText}</span></b>
       <div><b>${texts[currentLang].label_company}:</b> ${item.tencongty}</div>
       <div class="time-row"><span>Vào: ${item.giovao} → Ra: ${item.giora}</span><span>Tổng: ${item.tonggio}</span></div>
-      <div class="detail-row">Tăng ca: ${item.tangca} | Ca đêm: ${item.cadem}</div>`;
+      <div class="detail-row">Tăng ca: ${item.tangca} | Ca đêm: ${item.cadem}</div>
+    </div>`;
+    let btnDel = document.createElement("button");
+    btnDel.className="history-delete";
+    btnDel.textContent="Xóa";
+    btnDel.onclick=()=>{lichSu.splice(index,1);localStorage.setItem("lichSuLuong",JSON.stringify(lichSu));hienThi();};
+    div.appendChild(btnDel);
     box.appendChild(div);
   });
 }
 
-// Lưu dữ liệu
-function luu(){
+document.getElementById("btn-save").addEventListener("click",()=>{
   tinhGio();
-  const ngay=document.getElementById("ngay").value;
-  if(!ngay){alert(texts[currentLang].label_date+" !!!");return;}
-  const tenct=document.getElementById("tencongty").value.trim();
-  if(!tenct){alert(texts[currentLang].label_company+" !!!");return;}
-  let gv_g=String(document.getElementById("giovao_gio").value).padStart(2,"0");
-  let gv_p=String(document.getElementById("giovao_phut").value).padStart(2,"0");
-  let gr_g=String(document.getElementById("giora_gio").value).padStart(2,"0");
-  let gr_p=String(document.getElementById("giora_phut").value).padStart(2,"0");
-  const shift=document.getElementById("calam").value;
-
-  lichSu.push({
-    ngay, tencongty:tenct, giovao:`${gv_g}:${gv_p}`, giora:`${gr_g}:${gr_p}`,
-    calam: shift,
+  const item={
+    ngay:document.getElementById("ngay").value || new Date().toLocaleDateString(),
+    tencongty:document.getElementById("tencongty").value,
+    giovao:`${document.getElementById("giovao_gio").value}:${document.getElementById("giovao_phut").value}`,
+    giora:`${document.getElementById("giora_gio").value}:${document.getElementById("giora_phut").value}`,
     tonggio:document.getElementById("tonggio").value,
     tangca:document.getElementById("tangca").value,
-    cadem:document.getElementById("cadem").value
-  });
+    cadem:document.getElementById("cadem").value,
+    calam:document.getElementById("calam").value
+  };
+  lichSu.unshift(item);
   localStorage.setItem("lichSuLuong",JSON.stringify(lichSu));
-  alert(texts[currentLang].btn_save+"!");
   resetForm();
-}
+});
 
-document.getElementById("btn-save").addEventListener("click",luu);
 document.getElementById("btn-reset").addEventListener("click",resetForm);
-document.getElementById("btn-show-history").addEventListener("click",()=>{
-  document.getElementById("form-ghi").classList.add("hidden");
-  document.getElementById("lichsu-container").classList.remove("hidden");
-  hienThi();
-});
-document.getElementById("btn-clear-history").addEventListener("click",()=>{
-  if(confirm("Bạn có chắc muốn xóa toàn bộ lịch sử?")){
-    lichSu = []; 
-    localStorage.removeItem("lichSuLuong"); 
-    document.getElementById("lichsu").innerHTML=`<p>${texts[currentLang].no_history}</p>`;
-  }
-});
-document.getElementById("btn-back").addEventListener("click",()=>{
-  document.getElementById("lichsu-container").classList.add("hidden");
-  document.getElementById("form-ghi").classList.remove("hidden");
-});
-document.getElementById("lang-select").addEventListener("change",e=>{
-  currentLang=e.target.value; updateText(currentLang); hienThi();
-});
-["giovao_gio","giovao_phut","giora_gio","giora_phut","calam"].forEach(id=>{
-  document.getElementById(id).addEventListener("input",tinhGio);
-  document.getElementById(id).addEventListener("change",tinhGio);
-});
-window.onload=function(){updateText(currentLang);tinhGio();}
+document.getElementById("btn-show-history").addEventListener("click",()=>{document.getElementById("form-ghi").classList.add("hidden");document.getElementById("lichsu-container").classList.remove("hidden");hienThi();});
+document.getElementById("btn-back").addEventListener("click",()=>{document.getElementById("form-ghi").classList.remove("hidden");document.getElementById("lichsu-container").classList.add("hidden");});
+document.getElementById("btn-clear-history").addEventListener("click",()=>{if(confirm("Xóa toàn bộ lịch sử?")){lichSu=[];localStorage.setItem("lichSuLuong","[]");hienThi();}});
+
+document.getElementById("lang-select").addEventListener("change",e=>{currentLang=e.target.value;updateText(currentLang);});
+
+// update text on load
+updateText(currentLang);
 </script>
-</div>
 </body>
 </html>
